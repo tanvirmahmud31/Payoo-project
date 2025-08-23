@@ -1,41 +1,65 @@
-const fixedPin=1234
+const validPin = 1234;
 
-document.getElementById("add-money-btn").addEventListener("click",function(e){
-    e.preventDefault()
+// add money feature
 
-    
-    const bank= document.getElementById("bank").value
-    console.log(bank)
-    const accountNumber= document.getElementById("account-number").value
-    const addAmmount =parseInt(document.getElementById("add-ammount").value)
-    const pinNumber= parseInt(document.getElementById("pin-no").value)
+document
+  .getElementById("add-money-btn")
+  .addEventListener("click", function (e) {
+    e.preventDefault();
+    const bank = document.getElementById("bank").value;
+    const accountNumber = document.getElementById("account-number").value;
 
-    //console.log(bank,accountNumber,addAmmount,pinNumber)
+    const amount = parseInt(document.getElementById("add-amount").value);
 
-    if(accountNumber.length!==11){
-        alert("please provide valid number")
-        return
+    const pinNumber = parseInt(document.getElementById("add-pin").value);
+
+    const availableBalance = parseInt(
+      document.getElementById("available-balance").innerText
+    );
+
+    if (accountNumber.length < 11) {
+      alert("Invalid account Number");
+      return;
     }
 
-    if(pinNumber !==fixedPin){
-        alert("Correct pin please")
-        return;
+    if (pinNumber !== validPin) {
+      alert("Invalid pin Number");
+      return;
     }
-    const availableBalance=document.getElementById("available-balance").innerText
-    //console.log(availableBalance)
-    const totalBalance= addAmmount + parseInt(availableBalance);
-    document.getElementById("available-balance").innerText=totalBalance
-})
 
-//togling
+    const totalNewAvailableBalance = amount + availableBalance;
+    document.getElementById("available-balance").innerText =
+      totalNewAvailableBalance;
+  });
 
-document.getElementById("add-money-btn").addEventListener("click",function(){
-    document.getElementById("cashout-parent").style.display="none"
-    document.getElementById("add-money-parent").style.display="block"
-})
+//cashout money feature
 
-document.getElementById("cashout-btn").addEventListener("click",function(){
-     document.getElementById("add-money-parent").style.display="none"
-    document.getElementById("cashout-parent").style.display="block"
-   
-})
+document.getElementById("withdraw-btn").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const amount = parseInt(document.getElementById("withdraw-amount").value);
+
+  const availableBalance = parseInt(
+    document.getElementById("available-balance").innerText
+  );
+
+  const totalNewAvailableBalance = availableBalance - amount;
+
+  console.log(totalNewAvailableBalance);
+
+  document.getElementById("available-balance").innerText =
+    totalNewAvailableBalance;
+});
+
+// toggling feature
+
+document.getElementById("add-button").addEventListener("click", function (e) {
+  document.getElementById("cash-out-parent").style.display = "none";
+  document.getElementById("add-money-parent").style.display = "block";
+});
+document
+  .getElementById("cash-out-button")
+  .addEventListener("click", function () {
+    document.getElementById("add-money-parent").style.display = "none";
+    document.getElementById("cash-out-parent").style.display = "block";
+  });
